@@ -24,6 +24,7 @@ waitForElement(
     button.addEventListener("click", () => {
       const floating = sidebar.getAttribute("floating") == "true";
       sidebar.setAttribute("floating", !floating);
+      sidebarSplitter.setAttribute("floating", !floating);
     });
     const sidebarHeader = sidebar.querySelector("#sidebar2-header");
     if (sidebarHeader.children.length >= 4) {
@@ -34,6 +35,7 @@ waitForElement(
       sidebarHeader.appendChild(button);
     }
     sidebar.setAttribute("floating", "true");
+    sidebarSplitter.setAttribute("floating", "true");
     // sidebarSplitter.appendChild(sidebar);
     // Function to hide the sidebar
     const hideSidebar = () => {
