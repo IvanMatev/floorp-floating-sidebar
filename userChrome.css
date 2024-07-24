@@ -20,9 +20,25 @@ Quote: https://userChrome.org | https://github.com/topics/userchrome
 {
   /* Please write your custom CSS under this line*/
 }
+/*Sidebar*/
 #sidebar2-box.browser-sidebar2.chromeclass-extrachrome[floating="true"] {
   position: absolute !important;
   height: 96% !important;
   right: 50px !important;
   z-index: 50 !important;
+}
+
+#sidebar-splitter2.browser-sidebar2.chromeclass-extrachrome[floating="true"] {
+  display: none !important;
+}
+#sidebar-splitter-floating {
+  position: absolute;
+  height: 100%;
+  width: 10px;
+  z-index: 9999;
+  cursor: ew-resize;
+}
+
+#sidebar-splitter-floating[floating="false"] {
+  display: none !important;
 }

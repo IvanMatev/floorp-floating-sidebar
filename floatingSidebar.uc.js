@@ -6,16 +6,64 @@ function waitForElement(selector1, selector2, callback) {
       clearInterval(interval);
       callback(element1, element2);
     }
-  }, 500); // Check every 100ms
+  }, 500);
 }
 
 waitForElement(
   "#sidebar2-box.browser-sidebar2.chromeclass-extrachrome",
-  "#sidebar-select-box", // Replace with the correct selector for the container
+  "#sidebar-select-box",
   (sidebar, sidebarContainer) => {
     const sidebarSplitter = document.querySelector(
       "#sidebar-splitter2.browser-sidebar2.chromeclass-extrachrome"
     );
+
+    // create sidebar splitter
+    const splitter = document.createElement("splitter");
+    splitter.setAttribute("id", "sidebar-splitter-floating");
+    splitter.setAttribute("class", "sidebar-splitter-floating");
+    sidebar.setAttribute("floating", "true");
+    sidebar.appendChild(splitter);
+    let isDragging = false;
+    let startX = 0;
+    let startWidth = 0;
+
+    splitter.addEventListener("mousedown", (event) => {
+      isDragging = true;
+      startX = event.screenX;
+      startWidth = sidebar.getBoundingClientRect().width;
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+      event.preventDefault();
+    });
+
+    function onMouseMove(event) {
+      if (!isDragging) return;
+      const deltaX = -event.screenX + startX;
+      const newWidth = startWidth + deltaX;
+      sidebar.style.width = newWidth + "px";
+    }
+
+    function onMouseUp() {
+      if (!isDragging) return;
+      isDragging = false;
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    }
+    function checkSplitterVisibility() {
+      const sidebarMaxWidth = getComputedStyle(sidebar).maxWidth;
+      if (sidebarMaxWidth === "0px") {
+        splitter.style.display = "none";
+        sidebar.style.opacity = "0";
+      } else {
+        splitter.style.display = "block";
+        sidebar.style.opacity = "1";
+      }
+    }
+    const observer = new MutationObserver(() => {
+      checkSplitterVisibility();
+    });
+
+    observer.observe(sidebar, { attributes: true, attributeFilter: ["style"] });
 
     // add button to toggle floating sidebar
     const button = document.createElement("button");
@@ -25,18 +73,17 @@ waitForElement(
       const floating = sidebar.getAttribute("floating") == "true";
       sidebar.setAttribute("floating", !floating);
       sidebarSplitter.setAttribute("floating", !floating);
+      splitter.setAttribute("floating", !floating);
     });
     const sidebarHeader = sidebar.querySelector("#sidebar2-header");
     if (sidebarHeader.children.length >= 4) {
-      // Insert the button before the 5th child (index 4 since it's zero-based)
       sidebarHeader.insertBefore(button, sidebarHeader.children[4]);
     } else {
-      // If there are less than 4 children, append the button to the end
       sidebarHeader.appendChild(button);
     }
     sidebar.setAttribute("floating", "true");
     sidebarSplitter.setAttribute("floating", "true");
-    // sidebarSplitter.appendChild(sidebar);
+
     // Function to hide the sidebar
     const hideSidebar = () => {
       const sidebarIcons = sidebarContainer.querySelectorAll(
