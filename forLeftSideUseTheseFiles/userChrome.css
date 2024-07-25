@@ -1,0 +1,45 @@
+/*************************************************************************************************************************************************************************************************************************************************************
+
+"userChrome.css" is a custom CSS file that can be used to specify CSS style rules for Floorp's interface (NOT internal site) using "chrome" privileges.
+For instance, if you want to hide the tab bar, you can use the following CSS rule:
+
+**************************************
+#TabsToolbar {                       *
+    display: none !important;        *
+}                                    *
+**************************************
+
+NOTE: You can use the userChrome.css file without change preferences (about:config)
+
+Quote: https://userChrome.org | https://github.com/topics/userchrome 
+
+************************************************************************************************************************************************************************************************************************************************************/
+
+@charset "UTF-8";
+@-moz-document url(chrome://browser/content/browser.xhtml)
+{
+  /* Please write your custom CSS under this line*/
+}
+/*Sidebar*/
+#sidebar2-box.browser-sidebar2.chromeclass-extrachrome[floating="true"] {
+  position: absolute !important;
+  height: 96% !important;
+  left: 43px !important;
+  z-index: 50 !important;
+}
+
+#sidebar-splitter2.browser-sidebar2.chromeclass-extrachrome[floating="true"] {
+  display: none !important;
+}
+#sidebar-splitter-floating {
+  position: absolute;
+  height: 100%;
+  width: 10px;
+  z-index: 9999;
+  right: 0;
+  cursor: ew-resize;
+}
+
+#sidebar-splitter-floating[floating="false"] {
+  display: none !important;
+}
