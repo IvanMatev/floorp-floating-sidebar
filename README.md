@@ -1,8 +1,8 @@
+Update: Now resizable!
+
 -Allows the sidebar to open on a floating window and close when clicked outside 
 
 -Toggle on or off
-
--unfortunately cannot be resized while floating at the minute, to resize toggle off and then on again.
 
 Installation:
 - Install the following https://github.com/xiaoxiaoflood/firefox-scripts
