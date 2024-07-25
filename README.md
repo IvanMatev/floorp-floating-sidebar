@@ -1,3 +1,5 @@
+Files for left side added in the appropriate folder, use the ones you need accordingly.
+
 Update: Now resizable!
 
 -Allows the sidebar to open on a floating window and close when clicked outside 
